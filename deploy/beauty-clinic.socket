@@ -1,0 +1,11 @@
+# سوکت یونیکس برای ارتباط nginx ↔ gunicorn
+[Unit]
+Description=Beauty Clinic gunicorn socket
+
+[Socket]
+ListenStream=/run/beauty-clinic/gunicorn.sock
+SocketUser=www-data
+SocketMode=0660
+
+[Install]
+WantedBy=sockets.target

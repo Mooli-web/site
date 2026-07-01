@@ -1,0 +1,79 @@
+{% extends "website/base.html" %}
+{% load static %}
+{% block title %}نتیجه پرداخت — {{ clinic.name|default:"کلینیک زیبایی" }}{% endblock %}
+
+{% block content %}
+<section class="relative min-h-screen pt-24 md:pt-28 pb-16">
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-blush-50 via-white to-sand-50"></div>
+
+  <div class="max-w-lg mx-auto px-4 sm:px-6 text-center">
+
+    {% if success %}
+    <!-- موفق -->
+    <div class="inline-flex w-20 h-20 items-center justify-center rounded-full bg-green-100 text-green-600 mb-6">
+      <svg class="w-11 h-11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800">پرداخت با موفقیت انجام شد!</h1>
+    <p class="mt-3 text-gray-600">نوبت شما نهایی شد. لطفاً کد پیگیری را نزد خود نگه دارید.</p>
+    {% else %}
+    <!-- ناموفق -->
+    <div class="inline-flex w-20 h-20 items-center justify-center rounded-full bg-red-100 text-red-600 mb-6">
+      <svg class="w-11 h-11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </div>
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-800">پرداخت ناموفق بود</h1>
+    <p class="mt-3 text-gray-600">پرداخت انجام نشد یا لغو شد. می‌توانید دوباره تلاش کنید.</p>
+    {% endif %}
+
+    <!-- کد پیگیری -->
+    <div class="mt-6 inline-flex flex-col items-center gap-1 rounded-2xl bg-blush-50 px-8 py-4 ring-1 ring-blush-100">
+      <span class="text-xs text-blush-600">کد پیگیری</span>
+      <span class="text-2xl font-bold tracking-widest text-blush-700" dir="ltr">{{ appt.tracking_code }}</span>
+    </div>
+
+    <!-- جزئیات -->
+    <div class="mt-6 rounded-3xl bg-white p-6 shadow-soft ring-1 ring-blush-50 text-right">
+      <dl class="space-y-3 text-sm">
+        <div class="flex justify-between gap-2"><dt class="text-gray-500">نام</dt><dd class="font-medium text-gray-800">{{ appt.customer.full_name }}</dd></div>
+        <div class="flex justify-between gap-2"><dt class="text-gray-500">خدمت</dt><dd class="font-medium text-gray-800">{{ appt.service.title }}</dd></div>
+        <div class="flex justify-between gap-2"><dt class="text-gray-500">تاریخ</dt><dd class="font-medium text-gray-800">{{ date_fa }}</dd></div>
+        <div class="flex justify-between gap-2"><dt class="text-gray-500">ساعت</dt><dd class="font-bold text-blush-700">{{ start_fa }}</dd></div>
+        <div class="flex justify-between gap-2"><dt class="text-gray-500">مبلغ</dt><dd class="font-medium text-gray-800">{{ appt.price|floatformat:0 }} تومان</dd></div>
+        <div class="flex justify-between gap-2">
+          <dt class="text-gray-500">وضعیت</dt>
+          <dd>
+            {% if success %}
+            <span class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-green-200">{{ appt.get_status_display }}</span>
+            {% else %}
+            <span class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-medium text-red-700 ring-1 ring-red-200">{{ appt.get_status_display }}</span>
+            {% endif %}
+          </dd>
+        </div>
+        {% if success and appt.ref_id %}
+        <div class="flex justify-between gap-2 border-t border-blush-50 pt-3">
+          <dt class="text-gray-500">کد رهگیری پرداخت</dt>
+          <dd class="font-bold text-gray-800" dir="ltr">{{ appt.ref_id }}</dd>
+        </div>
+        {% endif %}
+      </dl>
+    </div>
+
+    {% if success %}
+    <div class="mt-6 rounded-xl bg-sand-50 border border-sand-100 px-4 py-3 text-sm text-sand-800 text-right">
+      <p>📌 لطفاً ۱۰ دقیقه پیش از زمان نوبت در کلینیک حضور داشته باشید.</p>
+    </div>
+    <a href="{% url 'website:home' %}" class="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-blush-700 ring-1 ring-blush-200 hover:bg-blush-50 transition">
+      بازگشت به صفحه اصلی
+    </a>
+    {% else %}
+    <div class="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="{% url 'payments:pay' appt.tracking_code %}" class="inline-flex items-center justify-center gap-2 rounded-full bg-blush-600 px-6 py-3 text-sm font-bold text-white shadow-soft hover:bg-blush-700 transition">
+        تلاش مجدد برای پرداخت
+      </a>
+      <a href="{% url 'website:home' %}" class="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-blush-700 ring-1 ring-blush-200 hover:bg-blush-50 transition">
+        بازگشت به صفحه اصلی
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

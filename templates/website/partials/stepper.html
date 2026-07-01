@@ -1,0 +1,30 @@
+{% comment %}
+نشانگر مراحل رزرو. متغیر `active` = شماره مرحله فعال (۱ تا ۵؛ ۵ = موفقیت).
+هنگام تعویض مرحله با HTMX، با hx-swap-oob به‌روزرسانی می‌شود.
+{% endcomment %}
+<div id="booking-stepper" class="flex items-center justify-center" {% if oob %}hx-swap-oob="true"{% endif %}>
+  <ol class="flex items-center w-full max-w-xl">
+    {% for i in "1234" %}
+      {% with num=forloop.counter %}
+      <li class="flex items-center {% if not forloop.last %}flex-1{% endif %}">
+        <div class="flex flex-col items-center gap-1.5">
+          <span class="flex items-center justify-center w-9 h-9 rounded-full text-sm font-bold transition
+            {% if num < active %}bg-blush-600 text-white
+            {% elif num == active %}bg-blush-600 text-white ring-4 ring-blush-100
+            {% else %}bg-white text-gray-400 ring-1 ring-gray-200{% endif %}">
+            {% if num < active %}
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+            {% else %}{{ num }}{% endif %}
+          </span>
+          <span class="text-[11px] font-medium {% if num <= active %}text-blush-700{% else %}text-gray-400{% endif %} hidden sm:block">
+            {% if num == 1 %}خدمت{% elif num == 2 %}روز{% elif num == 3 %}ساعت{% else %}اطلاعات{% endif %}
+          </span>
+        </div>
+        {% if not forloop.last %}
+        <div class="flex-1 h-0.5 mx-2 mb-5 {% if num < active %}bg-blush-500{% else %}bg-gray-200{% endif %}"></div>
+        {% endif %}
+      </li>
+      {% endwith %}
+    {% endfor %}
+  </ol>
+</div>

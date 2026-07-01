@@ -1,0 +1,41 @@
+# ============================================================================ #
+#  سرویس systemd برای اجرای Gunicorn (کلینیک زیبایی)
+#
+#  نصب:
+#    sudo cp deploy/beauty-clinic.socket  /etc/systemd/system/
+#    sudo cp deploy/beauty-clinic.service /etc/systemd/system/
+#    sudo systemctl daemon-reload
+#    sudo systemctl enable --now beauty-clinic.socket
+#    sudo systemctl start beauty-clinic.service
+#    sudo systemctl status beauty-clinic.service
+# ============================================================================ #
+[Unit]
+Description=Beauty Clinic Gunicorn daemon
+Requires=beauty-clinic.socket
+After=network.target
+
+[Service]
+Type=notify
+# کاربر و گروهی که فرایند با آن اجرا می‌شود (با محیط شما تطبیق دهید)
+User=www-data
+Group=www-data
+
+# مسیر پروژه و محیط مجازی
+WorkingDirectory=/home/user
+# فایل متغیرهای محیطی production (SECRET_KEY, DEBUG=False, DB_* و ...)
+EnvironmentFile=/home/user/.env
+
+ExecStart=/home/user/.venv/bin/gunicorn \
+          --config /home/user/deploy/gunicorn.conf.py \
+          config.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=3
+
+# سخت‌سازی امنیتی
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

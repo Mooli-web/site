@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ clinic.name|default:"کلینیک زیبایی" }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}رزرو آنلاین نوبت در {{ clinic.name|default:'کلینیک زیبایی' }} — خدمات تخصصی پوست، مو و زیبایی{% endblock %}">
+
+  <!-- ===== استایل و اسکریپت‌ها: همگی محلی، بدون هیچ CDN خارجی ===== -->
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+
+  <!-- Alpine.js (محلی) — با defer تا قبل از اجرا DOM آماده باشد -->
+  <script defer src="{% static 'js/alpine.min.js' %}"></script>
+  <!-- HTMX (محلی) -->
+  <script defer src="{% static 'js/htmx.min.js' %}"></script>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+  {% include "website/partials/navbar.html" %}
+
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "website/partials/footer.html" %}
+
+  {% block extra_body %}{% endblock %}
+</body>
+</html>

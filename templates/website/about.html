@@ -1,0 +1,114 @@
+{% extends "website/base.html" %}
+{% load static %}
+
+{% block title %}درباره ما — {{ clinic.name }}{% endblock %}
+{% block description %}آشنایی با {{ clinic.name }}؛ تیم متخصص، ارزش‌ها و تجربه‌ی ما در ارائه‌ی خدمات تخصصی پوست، مو و زیبایی.{% endblock %}
+
+{% block content %}
+
+<!-- ============ HERO ============ -->
+<section class="relative overflow-hidden">
+  <div class="absolute inset-0 -z-10 bg-gradient-to-b from-blush-50 via-white to-sand-50"></div>
+  <div class="absolute -z-10 top-24 -left-24 w-72 h-72 bg-blush-200/40 blur-3xl rounded-full"></div>
+  <div class="absolute -z-10 bottom-0 -right-16 w-72 h-72 bg-sand-200/40 blur-3xl rounded-full"></div>
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 md:pt-40 pb-14 text-center">
+    <span class="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur px-4 py-1.5 text-sm font-medium text-blush-700 shadow-soft ring-1 ring-blush-100">
+      درباره {{ clinic.name }}
+    </span>
+    <h1 class="mt-6 text-[2rem] sm:text-4xl md:text-5xl font-bold leading-tight text-gray-800">
+      داستان <span class="gradient-text">زیبایی</span> ما
+    </h1>
+    <p class="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
+      {% if clinic.about %}{{ clinic.about }}{% else %}{{ clinic.name }} با هدف ارائه‌ی خدمات تخصصی و باکیفیت در حوزه‌ی پوست، مو و زیبایی شکل گرفت. ما باور داریم زیبایی یعنی آرامش، اعتماد به نفس و مراقبت اصولی؛ و تمام تلاش‌مان را می‌کنیم تا این تجربه را در فضایی لوکس و حرفه‌ای برای شما فراهم کنیم.{% endif %}
+    </p>
+  </div>
+</section>
+
+<!-- ============ آمار ============ -->
+<section class="pb-6">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {% for st in stats %}
+      <div class="rounded-3xl bg-white p-6 text-center shadow-soft ring-1 ring-blush-50">
+        <div class="text-3xl font-bold text-blush-700">{{ st.num }}</div>
+        <div class="mt-1 text-sm text-gray-500">{{ st.label }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ============ ماموریت + تصویر ============ -->
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <div class="relative">
+        <div class="absolute inset-0 -z-10 blob-anim bg-gradient-to-br from-blush-200 to-sand-200 scale-110"></div>
+        <img src="{% static 'img/treatment.png' %}" alt="فضای {{ clinic.name }}"
+             class="relative w-full h-[360px] md:h-[460px] object-cover rounded-[2.5rem] shadow-soft ring-4 ring-white">
+      </div>
+      <div>
+        <span class="text-sm font-bold text-blush-600">ماموریت ما</span>
+        <h2 class="mt-2 text-3xl md:text-4xl font-bold text-gray-800">مراقبت با عشق و تخصص</h2>
+        <p class="mt-5 text-gray-600 leading-8">
+          ما در {{ clinic.name }} به هر مراجعه‌کننده به‌چشم یک مهمان ویژه نگاه می‌کنیم. از لحظه‌ای که
+          وارد می‌شوید تا پایان درمان، هدف ما این است که با خیال آسوده، نتیجه‌ای ماندگار و رضایت‌بخش را تجربه کنید.
+        </p>
+        <p class="mt-4 text-gray-600 leading-8">
+          استفاده از تجهیزات به‌روز، رعایت کامل اصول بهداشتی و تیمی از متخصصان دلسوز، سه ستون اصلی کار ماست.
+        </p>
+        <a href="{% url 'website:booking' %}"
+           class="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-l from-blush-500 to-blush-600 px-7 py-3.5 text-base font-bold text-white shadow-soft hover:from-blush-600 hover:to-blush-700 transition">
+          رزرو نوبت
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7M4 12h16"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ارزش‌ها ============ -->
+<section class="py-16 bg-gradient-to-b from-sand-50 to-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="text-sm font-bold text-blush-600">ارزش‌های ما</span>
+      <h2 class="mt-2 text-3xl md:text-4xl font-bold text-gray-800">چه چیزی ما را متمایز می‌کند</h2>
+    </div>
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {% for v in values %}
+      <div class="rounded-3xl bg-white p-7 shadow-soft ring-1 ring-blush-50 hover:-translate-y-1.5 hover:ring-blush-200 transition-all">
+        <div class="inline-flex w-12 h-12 items-center justify-center rounded-2xl bg-blush-100 text-blush-600">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h3 class="mt-5 text-lg font-bold text-gray-800">{{ v.title }}</h3>
+        <p class="mt-2 text-sm leading-7 text-gray-600">{{ v.desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="py-20">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-l from-blush-600 to-blush-500 px-6 sm:px-8 py-12 sm:py-14 text-center shadow-soft">
+      <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full"></div>
+      <div class="absolute -bottom-12 -left-8 w-52 h-52 bg-white/10 rounded-full"></div>
+      <h2 class="relative text-2xl sm:text-3xl md:text-4xl font-bold text-white">دوست دارید بیشتر آشنا شوید؟</h2>
+      <p class="relative mt-4 text-blush-50 max-w-xl mx-auto">با ما در تماس باشید یا همین حالا نوبت خود را رزرو کنید.</p>
+      <div class="relative mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="{% url 'website:booking' %}"
+           class="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 sm:px-8 py-3.5 sm:py-4 text-base sm:text-lg font-bold text-blush-700 shadow-soft hover:scale-[1.03] transition">
+          رزرو نوبت
+        </a>
+        <a href="{% url 'website:contact' %}"
+           class="inline-flex items-center justify-center gap-2 rounded-full bg-blush-700/30 ring-1 ring-white/60 px-7 sm:px-8 py-3.5 sm:py-4 text-base sm:text-lg font-bold text-white hover:bg-blush-700/50 transition">
+          تماس با ما
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% comment %}مرحله ۲: تقویم شمسی{% endcomment %}
+{% include "website/partials/stepper.html" with active=2 oob=True %}
+
+<div class="anim-up">
+  <div class="flex items-center justify-between mb-1">
+    <h2 class="text-xl font-bold text-gray-800">۲. روز موردنظر را انتخاب کنید</h2>
+    {% include "website/partials/back_button.html" with url='/booking/' qs='' %}
+  </div>
+
+  <div class="mb-6 inline-flex items-center gap-2 rounded-full bg-blush-50 px-4 py-1.5 text-sm text-blush-700 ring-1 ring-blush-100">
+    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+    خدمت: <strong>{{ service.title }}</strong> · {{ service.duration_minutes }} دقیقه
+  </div>
+
+  <div class="max-w-md mx-auto rounded-3xl bg-white p-5 sm:p-6 shadow-soft ring-1 ring-blush-50">
+    <div class="flex items-center justify-between mb-5">
+      {% if month.prev.enabled %}
+      <button type="button"
+              hx-get="{% url 'website:booking_calendar' %}?service={{ service.id }}&year={{ month.prev.year }}&month={{ month.prev.month }}"
+              hx-target="#booking-body" hx-swap="innerHTML"
+              class="inline-flex w-9 h-9 items-center justify-center rounded-full text-blush-600 hover:bg-blush-50 transition">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      {% else %}
+      <span class="w-9 h-9 inline-flex items-center justify-center text-gray-200">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </span>
+      {% endif %}
+
+      <div class="text-center font-bold text-gray-800">{{ month.month_name }} {{ month.year_fa }}</div>
+
+      {% if month.next.enabled %}
+      <button type="button"
+              hx-get="{% url 'website:booking_calendar' %}?service={{ service.id }}&year={{ month.next.year }}&month={{ month.next.month }}"
+              hx-target="#booking-body" hx-swap="innerHTML"
+              class="inline-flex w-9 h-9 items-center justify-center rounded-full text-blush-600 hover:bg-blush-50 transition">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      {% else %}
+      <span class="w-9 h-9 inline-flex items-center justify-center text-gray-200">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+      </span>
+      {% endif %}
+    </div>
+
+    <div class="grid grid-cols-7 gap-1 mb-2">
+      {% for h in month.headers %}
+      <div class="text-center text-xs font-bold text-gray-400 py-1">{{ h }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="grid grid-cols-7 gap-1">
+      {% for week in month.weeks %}
+        {% for cell in week %}
+          {% if cell is None %}
+            <div></div>
+          {% elif cell.selectable %}
+            <button type="button"
+                    hx-get="{% url 'website:booking_slots' %}?service={{ service.id }}&date={{ cell.iso }}"
+                    hx-target="#booking-body" hx-swap="innerHTML"
+                    class="relative aspect-square flex items-center justify-center rounded-xl text-sm font-medium
+                           {% if cell.is_today %}bg-blush-50 text-blush-700 ring-1 ring-blush-300{% else %}text-gray-700 hover:bg-blush-500 hover:text-white{% endif %} transition">
+              {{ cell.day_fa }}
+              {% if cell.is_today %}<span class="absolute bottom-1 w-1 h-1 rounded-full bg-blush-500"></span>{% endif %}
+            </button>
+          {% else %}
+            <div class="aspect-square flex items-center justify-center rounded-xl text-sm text-gray-300 cursor-not-allowed">{{ cell.day_fa }}</div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+    <p class="mt-4 text-center text-xs text-gray-400">روزهای کم‌رنگ قابل رزرو نیستند.</p>
+  </div>
+</div>

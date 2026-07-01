@@ -1,0 +1,23 @@
+# ---- Core framework ----
+Django>=5.0,<5.2
+django-ninja>=1.3
+
+# ---- تقویم شمسی (جلالی) ----
+django-jalali>=7.0
+jdatetime>=5.0
+
+# ---- پایگاه داده (PostgreSQL) ----
+psycopg2-binary>=2.9
+
+# ---- پیکربندی محیط ----
+python-decouple>=3.8
+
+# ---- درگاه پرداخت زرین‌پال ----
+requests>=2.31
+
+# ---- استقرار (production) ----
+gunicorn>=21.2       # سرور WSGI
+whitenoise>=6.6      # سرو فایل‌های static به‌صورت فشرده و کش‌شده
+
+# توجه: Tailwind به‌صورت standalone CLI در vendor/tailwindcss استفاده می‌شود
+# (نیازی به Node.js نیست). HTMX و Alpine.js نیز به‌صورت محلی در static/js قرار دارند.
