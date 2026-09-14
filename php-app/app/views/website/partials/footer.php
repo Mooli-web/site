@@ -1,0 +1,62 @@
+<footer id="contact" class="mt-20 bg-gradient-to-b from-white to-blush-50 border-t border-blush-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
+    <div class="grid gap-8 sm:gap-10 md:grid-cols-3">
+
+      <!-- درباره -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-blush-400 to-sand-400 text-white">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.35-9.5-8.5C.9 9.6 2.3 6 5.5 6 7.4 6 8.7 7 12 9c3.3-2 4.6-3 6.5-3 3.2 0 4.6 3.6 3 6.5C19 16.65 12 21 12 21z"/></svg>
+          </span>
+          <span class="text-lg font-bold text-blush-700"><?= e($clinic['name']) ?></span>
+        </div>
+        <p class="text-sm leading-7 text-gray-600">
+          <?php if (!empty($clinic['about'])): ?><?= e($clinic['about']) ?><?php else: ?>آرامش و زیبایی را در فضایی لوکس و حرفه‌ای تجربه کنید. تیم متخصص ما همراه شماست.<?php endif; ?>
+        </p>
+      </div>
+
+      <!-- تماس -->
+      <div>
+        <h3 class="font-bold text-gray-800 mb-4">تماس با ما</h3>
+        <ul class="space-y-3 text-sm text-gray-600">
+          <li class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-blush-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.28a1 1 0 01.95.68l1.2 3.6a1 1 0 01-.27 1.05l-1.4 1.4a16 16 0 006.27 6.27l1.4-1.4a1 1 0 011.05-.27l3.6 1.2a1 1 0 01.68.95V19a2 2 0 01-2 2A16 16 0 013 5z"/></svg>
+            <span><?= e((($clinic['phone'] ?? '') !== '' ? $clinic['phone'] : "۰۲۱–۱۲۳۴۵۶۷۸")) ?></span>
+          </li>
+          <li class="flex items-start gap-2">
+            <svg class="w-4 h-4 mt-1 text-blush-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+            <span><?= e((($clinic['address'] ?? '') !== '' ? $clinic['address'] : "تهران، خیابان نمونه، پلاک ۱۲")) ?></span>
+          </li>
+          <?php if (!empty($clinic['instagram'])): ?>
+          <li class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-blush-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+            <span><?= e($clinic['instagram']) ?></span>
+          </li>
+          <?php endif; ?>
+        </ul>
+      </div>
+
+      <!-- لینک‌های سریع + CTA -->
+      <div class="md:text-left">
+        <h3 class="font-bold text-gray-800 mb-4">دسترسی سریع</h3>
+        <ul class="space-y-2.5 text-sm text-gray-600 mb-5">
+          <li><a href="/" class="hover:text-blush-600 transition">خانه</a></li>
+          <li><a href="/about/" class="hover:text-blush-600 transition">درباره ما</a></li>
+          <li><a href="/before-after/" class="hover:text-blush-600 transition">گالری قبل و بعد</a></li>
+          <li><a href="/faq/" class="hover:text-blush-600 transition">سوالات متداول</a></li>
+          <li><a href="/consultation/" class="hover:text-blush-600 transition">مشاوره رایگان</a></li>
+          <li><a href="/contact/" class="hover:text-blush-600 transition">تماس با ما</a></li>
+          <li><a href="/booking/" class="hover:text-blush-600 transition">رزرو نوبت</a></li>
+        </ul>
+        <a href="/booking/" class="inline-flex items-center gap-2 rounded-full bg-blush-600 px-6 py-3 text-sm font-bold text-white shadow-soft hover:bg-blush-700 transition">
+          رزرو نوبت آنلاین
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 19l-7-7 7-7M4 12h16"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-6 border-t border-blush-100 text-center text-xs text-gray-500">
+      © <?= e($now_year) ?> <?= e($clinic['name']) ?> — تمامی حقوق محفوظ است.
+    </div>
+  </div>
+</footer>

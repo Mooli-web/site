@@ -8,6 +8,8 @@ module.exports = {
     "./templates/**/*.html",
     "./apps/**/templates/**/*.html",
     "./apps/**/*.py", // برای کلاس‌هایی که در ویوها ساخته می‌شوند
+    "./php-app/app/views/**/*.php",
+    "./php-app/app/controllers/*.php",
   ],
   theme: {
     extend: {

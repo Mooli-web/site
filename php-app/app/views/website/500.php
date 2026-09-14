@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>خطای سرور — کلینیک زیبایی</title>
+  <link rel="stylesheet" href="/static/css/tailwind.css">
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-b from-blush-50 via-white to-sand-50">
+  <div class="text-center px-6">
+    <div class="text-7xl md:text-8xl font-bold text-blush-600">۵۰۰</div>
+    <h1 class="mt-4 text-2xl md:text-3xl font-bold text-gray-800">خطایی رخ داد</h1>
+    <p class="mt-3 text-gray-600 max-w-md mx-auto">
+      متأسفیم، مشکلی در سمت سرور پیش آمد. لطفاً کمی بعد دوباره تلاش کنید.
+    </p>
+    <a href="/"
+       class="mt-8 inline-flex items-center gap-2 rounded-full bg-blush-600 px-7 py-3.5 text-base font-bold text-white shadow-lg hover:bg-blush-700 transition">
+      بازگشت به خانه
+    </a>
+  </div>
+</body>
+</html>
