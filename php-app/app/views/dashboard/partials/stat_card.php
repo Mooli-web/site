@@ -1,0 +1,25 @@
+<?php $c = $color; ?>
+<div class="rounded-2xl bg-white p-4 sm:p-5 shadow-soft ring-1 ring-blush-50 flex items-center gap-4">
+  <span class="inline-flex w-11 h-11 shrink-0 items-center justify-center rounded-xl
+    <?php if ($c == 'blush'): ?>bg-blush-100 text-blush-600
+    <?php elseif ($c == 'sand'): ?>bg-sand-100 text-sand-600
+    <?php elseif ($c == 'amber'): ?>bg-amber-100 text-amber-600
+    <?php elseif ($c == 'green'): ?>bg-green-100 text-green-600
+    <?php else: ?>bg-gray-100 text-gray-500<?php endif; ?>">
+    <?php if ($icon == 'calendar'): ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M3 11h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/></svg>
+    <?php elseif ($icon == 'clock'): ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>
+    <?php elseif ($icon == 'week'): ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M3 11h18M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/><path stroke-linecap="round" d="M8 15h3"/></svg>
+    <?php elseif ($icon == 'bell'): ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+    <?php elseif ($icon == 'list'): ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    <?php elseif ($icon == 'users'): ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4z"/></svg>
+    <?php else: ?><svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.7 0-3 .9-3 2s1.3 2 3 2 3 .9 3 2-1.3 2-3 2m0-10V6m0 12v-2"/><circle cx="12" cy="12" r="9"/></svg>
+    <?php endif; ?>
+  </span>
+  <div class="min-w-0">
+    <div class="text-xs text-gray-400 truncate"><?= e($label) ?></div>
+    <div class="text-xl sm:text-2xl font-bold text-gray-800">
+      <?php if (!empty($money)): ?><?= e(money($value)) ?><?php else: ?><?= e($value) ?><?php endif; ?>
+    </div>
+  </div>
+</div>
+

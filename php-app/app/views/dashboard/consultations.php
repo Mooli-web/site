@@ -1,0 +1,68 @@
+<?php View::$page['title'] = 'درخواست‌های مشاوره — پنل مدیریت'; ?>
+<div x-data="{ sidebar: false }" class="min-h-screen lg:flex">
+
+  <!-- ===== سایدبار ===== -->
+  <?= view('dashboard/partials/sidebar', ['active' => "consultations", 'new_consultations_badge' => $counts['new']]) ?>
+
+  <!-- ===== محتوای اصلی ===== -->
+  <div class="flex-1 min-w-0">
+    <header class="h-16 bg-white border-b border-blush-50 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-20">
+      <div class="flex items-center gap-3">
+        <button @click="sidebar=true" class="lg:hidden inline-flex w-9 h-9 items-center justify-center rounded-lg text-gray-600 hover:bg-gray-50">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <h1 class="text-lg font-bold text-gray-800">درخواست‌های مشاوره</h1>
+          <p class="text-xs text-gray-400"><?= e($today_fa) ?></p>
+        </div>
+      </div>
+    </header>
+
+    <main class="p-4 sm:p-6 space-y-6">
+      <!-- ===== کارت‌های آماری ===== -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <?= view('dashboard/partials/stat_card', ['label' => "کل درخواست‌ها", 'value' => $counts['all'], 'color' => "gray", 'icon' => "list"]) ?>
+        <?= view('dashboard/partials/stat_card', ['label' => "تماس گرفته نشده", 'value' => $counts['new'], 'color' => "amber", 'icon' => "bell"]) ?>
+        <?= view('dashboard/partials/stat_card', ['label' => "در حال پیگیری", 'value' => $counts['in_progress'], 'color' => "blush", 'icon' => "clock"]) ?>
+        <?= view('dashboard/partials/stat_card', ['label' => "انجام شده", 'value' => $counts['done'], 'color' => "green", 'icon' => "cash"]) ?>
+      </div>
+
+      <!-- ===== فیلترها ===== -->
+      <div class="rounded-2xl bg-white p-4 sm:p-5 shadow-soft ring-1 ring-blush-50">
+        <form id="cons-filter-form"
+              hx-get="/dashboard/consultations/"
+              hx-target="#consultations-container"
+              hx-swap="innerHTML"
+              hx-push-url="false"
+              class="grid sm:grid-cols-3 gap-3">
+          <!-- جستجو -->
+          <div class="sm:col-span-2 relative">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4-4"/></svg>
+            </span>
+            <input type="text" name="q" value="<?= e($filters['q']) ?>"
+                   hx-get="/dashboard/consultations/" hx-target="#consultations-container" hx-swap="innerHTML"
+                   hx-trigger="keyup changed delay:400ms" hx-include="#cons-filter-form"
+                   placeholder="جستجو با نام یا شماره موبایل..."
+                   class="w-full rounded-xl border border-gray-300 pr-10 pl-4 py-2.5 text-sm focus:border-blush-400 focus:ring-2 focus:ring-blush-100 outline-none transition">
+          </div>
+          <!-- وضعیت -->
+          <select name="status"
+                  hx-get="/dashboard/consultations/" hx-target="#consultations-container" hx-swap="innerHTML" hx-include="#cons-filter-form"
+                  class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blush-400 focus:ring-2 focus:ring-blush-100 outline-none transition bg-white">
+            <option value="">همه وضعیت‌ها</option>
+            <?php $loop_i = 0; $loop_n = count($status_choices); foreach ($status_choices as $val => $label): $loop_i++; $loop_last = $loop_i === $loop_n; ?>
+            <option value="<?= e($val) ?>" <?php if ($filters['status'] == $val): ?>selected<?php endif; ?>><?= e($label) ?></option>
+            <?php endforeach; ?>
+          </select>
+        </form>
+      </div>
+
+      <!-- ===== جدول مشاوره‌ها ===== -->
+      <div id="consultations-container">
+        <?= view('dashboard/partials/consultations_table', get_defined_vars()) ?>
+      </div>
+    </main>
+  </div>
+</div>
+
